@@ -40,15 +40,14 @@ def send_alerts(level):
     print("Runing an alerting playbook of email and (sometimes) text alerts")
     if level.lower() in ['red', 'orange', 'yellow']:
         print('Running the ' + level + ' Alert runbook!')
+        if level.lower() == 'red':
+            send_email_alerts(RED_ALERT_EMAILS, 'Red')
+            send_sms_alerts(PHONE_NUMBERS, 'Red')
+        if level.lower() == 'orange':
+            send_email_alerts(ORANGE_ALERT_EMAILS, 'Orange')
+            send_sms_alerts(PHONE_NUMBERS, 'Orange')
+        if level.lower() == 'yellow':
+            send_email_alerts(YELLOW_ALERT_EMAILS, 'Yellow')
     else:
         print('Alert level not recognized - alert aborted')
-        break
-    if level.lower() == 'red':
-        send_email_alerts(RED_ALERT_EMAILS, 'Red')
-        send_sms_alerts(PHONE_NUMBERS, 'Red')
-    if level.lower() == 'orange':
-        send_email_alerts(ORANGE_ALERT_EMAILS, 'Orange')
-        send_sms_alerts(PHONE_NUMBERS, 'Orange')
-    if level.lower() == 'yellow':
-        send_email_alerts(YELLOW_ALERT_EMAILS, 'Yellow')
-
+    
