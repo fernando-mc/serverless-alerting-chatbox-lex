@@ -1,13 +1,21 @@
-
-def run_alerting_playbook(level):
-    print("Runing an alerting playbook like emailing, slacking and SMSing people")
-    print("Running playbook for alert level of: " + level)
+import alerts
 
 help_string = """
 Help information: Please enter an AlertLevel such as Red, Orange, or Yellow. 
-Red alerts are critical issues impacting production services, or that expose personally identifiable user data.
-Orange alerts are isseues impacting production services that do not have significant negative consequences.
-Yellow alerts are issues that you think need review by a manager.
+Detailed level information can be found here - https://www.cisecurity.org/cybersecurity-threats/alert-level/
+
+Red indicates a severe risk of hacking, virus, or other malicious activity 
+resulting in widespread outages and/or significantly destructive compromises 
+to systems with no known remedy or debilitates one or more critical 
+infrastructure sectors. 
+
+Orange indicates a high risk of increased hacking, virus, or other malicious 
+cyber activity that targets or compromises core infrastructure, causes 
+multiple service outages, causes multiple system compromises, or compromises 
+critical infrastructure.
+
+Yellow indicates a significant risk due to increased hacking, virus, or other 
+malicious activity that compromises systems or diminishes service.
 """
 
 help_response = {
@@ -43,10 +51,8 @@ def handler(event, context):
     
     if alert_type.lower() == 'help':
         # If help AlertLevel - Then return help message and request a new slot
-        print(help_response)
         return help_response
     else:
-        # Otherwise return the alert response and run alerting playbooks
-        run_alerting_playbook(alert_type)
-        print(alert_response)
+        # Otherwise - Run alerting playbooks and return the alert response
+        alerts.send_alerts(alert_type)
         return alert_response
