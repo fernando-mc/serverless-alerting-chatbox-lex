@@ -1,0 +1,42 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Resources" : {
+    "LambdaExecutionRoleForStudent": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+              "Effect": "Allow",
+              "Principal": {"Service": ["lambda.amazonaws.com"]},
+              "Action": ["sts:AssumeRole"]
+          }]
+        },
+        "Path": "/",
+        "Policies": [{
+          "PolicyName": "root",
+          "PolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [{
+                "Effect": "Allow",
+                "Action": ["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents"],
+                "Resource": "arn:aws:logs:*:*:*"
+            },
+            {
+                "Effect": "Allow",
+                "Action": ["sns:*"],
+                "Resource": "arn:aws:sns:us-east-1:*:*"
+            },
+            {
+              "Action": "ses:*",
+              "Effect": "Allow",
+              "Resource": "*"
+            }]
+          }
+        }],
+        "RoleName": "LambdaLexRole"
+      }
+    },
+  }
+}

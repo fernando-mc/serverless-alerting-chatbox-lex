@@ -1,1 +1,0 @@
-zip ./package.zip ./handler.py ./alerts.py
